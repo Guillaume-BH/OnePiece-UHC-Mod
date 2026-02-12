@@ -1,0 +1,15 @@
+name: Onepiece-Mod
+version: "${project.version}"
+author: Lastril
+main: fr.lastril.onepiecemod.OnePieceMod
+website: "${project.url}"
+description: "${project.description}"
+depend: [ SmartInv ]
+softdepend: [ Apollo-Bukkit ]
+commands:
+  vanish:
+    description: Permet de se mettre invisible aux yeux de tout les joueurs sur le serveur
+  xray:
+    description: (Uniquement aux joueurs utilisant le Lunar Client) Permet d'utiliser le mod Xray intégré au Lunar Client.
+  topluck:
+    description: Permet de voir le nombre d'or et de diamants minés par joueur sur le serveur
