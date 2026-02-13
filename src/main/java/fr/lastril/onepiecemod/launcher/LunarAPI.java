@@ -25,6 +25,13 @@ public class LunarAPI {
         staffModModule.enableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY));
     }
 
+    public void removeModerationMods(UUID uuid){
+        ApolloPlayer apolloPlayer = getApolloPlayer(uuid);
+        if(apolloPlayer == null) return;
+        StaffModModule staffModModule = Apollo.getModuleManager().getModule(StaffModModule.class);
+        staffModModule.disableStaffMods(apolloPlayer, Collections.singletonList(StaffMod.XRAY));
+    }
+
     public boolean isPlayerRunningLunarClient(UUID uuid) {
         return this.playerManager.hasSupport(uuid);
     }

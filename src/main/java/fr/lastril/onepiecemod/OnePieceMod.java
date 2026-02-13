@@ -3,9 +3,9 @@ package fr.lastril.onepiecemod;
 import fr.lastril.onepiecemod.command.AlertCommand;
 import fr.lastril.onepiecemod.command.TopLuckCommand;
 import fr.lastril.onepiecemod.command.VanishCommand;
-import fr.lastril.onepiecemod.command.XrayCommand;
 import fr.lastril.onepiecemod.launcher.LunarAPI;
 import fr.lastril.onepiecemod.listener.EntityDamages;
+import fr.lastril.onepiecemod.listener.GameModeListener;
 import fr.lastril.onepiecemod.listener.OresListener;
 import fr.lastril.onepiecemod.listener.WorldInitialization;
 import fr.lastril.onepiecemod.translate.TranslationParam;
@@ -37,7 +37,6 @@ public class OnePieceMod extends JavaPlugin {
         this.adventure = BukkitAudiences.create(this);
         this.registerLauncherAPI();
 
-        this.getCommand("xray").setExecutor(new XrayCommand(this));
         this.getCommand("vanish").setExecutor(new VanishCommand(this));
         this.getCommand("topluck").setExecutor(new TopLuckCommand(this));
         this.getCommand("alert").setExecutor(new AlertCommand(this));
@@ -45,6 +44,7 @@ public class OnePieceMod extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new OresListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WorldInitialization(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDamages(this), this);
+        this.getServer().getPluginManager().registerEvents(new GameModeListener(this), this);
     }
 
     public void registerLauncherAPI() {
