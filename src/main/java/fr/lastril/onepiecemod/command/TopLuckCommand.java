@@ -2,7 +2,6 @@ package fr.lastril.onepiecemod.command;
 
 import fr.lastril.onepiecemod.OnePieceMod;
 import fr.lastril.onepiecemod.gui.TopLuckGUI;
-import fr.lastril.onepiecemod.launcher.LunarAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,7 +24,7 @@ public class TopLuckCommand implements CommandExecutor {
         }
         final Player player = (Player) sender;
         if (!player.isOp()) {
-            player.sendMessage("§cVous n'avez pas la permission d'effectuer cette commande.");
+            player.sendMessage(this.plugin.getMessage("no-permission"));
             return false;
         }
         new TopLuckGUI(this.plugin).open(player);

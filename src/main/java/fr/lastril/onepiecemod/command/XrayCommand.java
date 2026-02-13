@@ -2,7 +2,6 @@ package fr.lastril.onepiecemod.command;
 
 import fr.lastril.onepiecemod.OnePieceMod;
 import fr.lastril.onepiecemod.launcher.LunarAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,20 +24,20 @@ public class XrayCommand implements CommandExecutor {
         }
         final Player player = (Player) sender;
         if (!player.isOp()) {
-            player.sendMessage("§cVous n'avez pas la permission d'effectuer cette commande.");
+            player.sendMessage(this.plugin.getMessage("no-permission"));
             return false;
         }
         final LunarAPI lunarAPI = this.plugin.getLunarAPI();
         if (lunarAPI == null) {
-            player.sendMessage("§3§lMOD§r §7┃§r Le plugin \"Apollo-Bukkit\" est manquant sur le serveur pour activer le mod Xray du Lunar Client");
+            player.sendMessage(this.plugin.getMessage("xray-apollo-missing"));
             return false;
         }
-        if (lunarAPI.isPlayerRunningLunarClient(player.getUniqueId())) {
-            player.sendMessage("§3§lMOD§r §7┃§r Vous n'utilisez pas le Lunar Client.");
+        if (!lunarAPI.isPlayerRunningLunarClient(player.getUniqueId())) {
+            player.sendMessage(this.plugin.getMessage("xray-no-running-lunar"));
             return false;
         }
         lunarAPI.sendModerationMods(player.getUniqueId());
-        player.sendMessage("§3§lMOD§r §7┃§r §f§aVous êtes connecté avec§b§l Lunar Client§a, en tant que spectateur et host, vous avez la possibilité d'utiliser le mod \"X-Ray\" (R+SHIFT ➜ Staff).");
+        player.sendMessage(this.plugin.getMessage("xray-send"));
         return true;
     }
 }

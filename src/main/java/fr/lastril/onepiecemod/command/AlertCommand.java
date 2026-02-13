@@ -7,11 +7,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class VanishCommand implements CommandExecutor {
+public class AlertCommand implements CommandExecutor {
 
     private final OnePieceMod plugin;
 
-    public VanishCommand(OnePieceMod plugin) {
+    public AlertCommand(OnePieceMod plugin) {
         this.plugin = plugin;
     }
 
@@ -26,18 +26,12 @@ public class VanishCommand implements CommandExecutor {
             player.sendMessage(this.plugin.getMessage("no-permission"));
             return false;
         }
-        if (this.plugin.isVanished(player.getUniqueId())) {
-            this.plugin.setVanished(player.getUniqueId(), false);
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                onlinePlayer.showPlayer(player);
-            }
-            player.sendMessage(this.plugin.getMessage("vanish-off"));
+        if (this.plugin.haveAlert(player.getUniqueId())) {
+            this.plugin.setAlerts(player.getUniqueId(), false);
+            player.sendMessage(this.plugin.getMessage("alert-off"));
         } else {
-            this.plugin.setVanished(player.getUniqueId(), true);
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                onlinePlayer.hidePlayer(player);
-            }
-            player.sendMessage(this.plugin.getMessage("vanish-on"));
+            this.plugin.setAlerts(player.getUniqueId(), true);
+            player.sendMessage(this.plugin.getMessage("alert-on"));
         }
         return true;
     }

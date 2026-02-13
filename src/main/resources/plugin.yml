@@ -1,4 +1,4 @@
-name: Onepiece-Mod
+name: OnePiece-Mod
 version: "${project.version}"
 author: Lastril
 main: fr.lastril.onepiecemod.OnePieceMod
@@ -13,3 +13,5 @@ commands:
     description: (Uniquement aux joueurs utilisant le Lunar Client) Permet d'utiliser le mod Xray intégré au Lunar Client.
   topluck:
     description: Permet de voir le nombre d'or et de diamants minés par joueur sur le serveur
+  alert:
+    description: Permet d'activer/désactiver les alertes

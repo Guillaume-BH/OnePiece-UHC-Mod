@@ -1,0 +1,17 @@
+boost:
+  gold: 100
+  diamond: 40
+  caves: 100
+
+messages:
+  no-permission: "§cVous n'avez pas la permission d'effectuer cette commande."
+  vanish-off: "§3§lMOD§r §7┃§r Vous êtes maintenant§a visible§f aux yeux des autres joueurs."
+  vanish-on: "§3§lMOD§r §7┃§r Vous êtes maintenant§c invisible§f aux yeux des autres joueurs."
+  xray-apollo-missing: "§3§lMOD§r §7┃§r Le plugin \"Apollo-Bukkit\" est manquant sur le serveur pour activer le mod Xray du§b§l Lunar Client§f."
+  xray-no-running-lunar: "§3§lMOD§r §7┃§r Vous n'utilisez pas le§b§l Lunar Client§f."
+  xray-send: "§3§lMOD§r §7┃§r §f§aVous êtes connecté avec§b§l Lunar Client§a, en tant que spectateur et host, vous avez la possibilité d'utiliser le mod \"X-Ray\" (R+SHIFT ➜ Staff)."
+  alert-on: "§4[S]§b Alert §8»§a Activées"
+  alert-off: "§4[S]§b Alert §8»§c Désactivées"
+  alert-fight: "§4[S]§c Combat §8»§c {attacker}§4 vs§c {attacked}"
+  alert-mining-gold: "§4[S]§e Minage Or §8»§e {playerName} ({number})"
+  alert-mining-diamond: "§4[S]§b Minage Or §8»§b {playerName} ({number})"
