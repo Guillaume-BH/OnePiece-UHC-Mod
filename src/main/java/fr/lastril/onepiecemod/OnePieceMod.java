@@ -4,10 +4,7 @@ import fr.lastril.onepiecemod.command.AlertCommand;
 import fr.lastril.onepiecemod.command.TopLuckCommand;
 import fr.lastril.onepiecemod.command.VanishCommand;
 import fr.lastril.onepiecemod.launcher.LunarAPI;
-import fr.lastril.onepiecemod.listener.EntityDamages;
-import fr.lastril.onepiecemod.listener.GameModeListener;
-import fr.lastril.onepiecemod.listener.OresListener;
-import fr.lastril.onepiecemod.listener.WorldInitialization;
+import fr.lastril.onepiecemod.listener.*;
 import fr.lastril.onepiecemod.translate.TranslationParam;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.Component;
@@ -41,6 +38,7 @@ public class OnePieceMod extends JavaPlugin {
         this.getCommand("topluck").setExecutor(new TopLuckCommand(this));
         this.getCommand("alert").setExecutor(new AlertCommand(this));
 
+        this.getServer().getPluginManager().registerEvents(new PlayerIO(this), this);
         this.getServer().getPluginManager().registerEvents(new OresListener(this), this);
         this.getServer().getPluginManager().registerEvents(new WorldInitialization(this), this);
         this.getServer().getPluginManager().registerEvents(new EntityDamages(this), this);
@@ -91,7 +89,7 @@ public class OnePieceMod extends JavaPlugin {
         this.golds.put(uuid, golds);
     }
 
-    public boolean haveAlert(UUID uuid){
+    public boolean haveAlert(UUID uuid) {
         return this.alerts.getOrDefault(uuid, false);
     }
 
@@ -120,6 +118,7 @@ public class OnePieceMod extends JavaPlugin {
     public void sendSpectatorsMessage(Component component) {
         for (Player onlinePlayer : this.getServer().getOnlinePlayers()) {
             if (!onlinePlayer.getGameMode().equals(GameMode.SPECTATOR)) continue;
+            if (!this.haveAlert(onlinePlayer.getUniqueId())) continue;
             this.adventure.player(onlinePlayer).sendMessage(component);
         }
     }

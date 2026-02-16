@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,27 +29,34 @@ public class EntityDamages implements Listener {
     @EventHandler
     private void onPlayerAttackPlayer(final EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
-        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
-            final Arrow arrow = (Arrow) event.getDamager();
+        if (event.getEntity() instanceof Player) {
             final Player player = (Player) event.getEntity();
-            final long attackedFight = this.lastDamages.getOrDefault(player.getUniqueId(), 0L);
-            if (arrow.getShooter() instanceof Player) {
-                final Player shooter = (Player) arrow.getShooter();
-                final long timestamp = System.currentTimeMillis();
-                final long attackerFight = this.lastDamages.getOrDefault(shooter.getUniqueId(), 0L);
-                if (timestamp - attackedFight >= ALERT_DELAY &&
-                        timestamp - attackerFight >= ALERT_DELAY) {
-                    this.lastDamages.put(player.getUniqueId(), timestamp);
-                    this.lastDamages.put(shooter.getUniqueId(), timestamp);
-                    final String message = this.plugin.getMessage("alert-fight",
-                            TranslationParam.from("attacker", shooter.getName()),
-                            TranslationParam.from("attacked", player.getName())
-                    );
-                    this.plugin.sendSpectatorsMessage(Component.text(message)
-                            .hoverEvent(HoverEvent.showText(Component.text("§cSe téléporter")))
-                            .clickEvent(ClickEvent.runCommand("/tp " + shooter.getName())));
+            if (event.getDamager() instanceof Arrow) {
+                final Arrow arrow = (Arrow) event.getDamager();
+                if (arrow.getShooter() instanceof Player) {
+                    final Player shooter = (Player) arrow.getShooter();
+                    sendAlert(shooter, player.getName());
                 }
             }
+            if (event.getDamager() instanceof Player) {
+                final Player attacker = (Player) event.getDamager();
+                sendAlert(attacker, player.getName());
+            }
+        }
+    }
+
+    private void sendAlert(Player attacker, String name) {
+        final long timestamp = System.currentTimeMillis();
+        final long attackerFight = this.lastDamages.getOrDefault(attacker.getUniqueId(), 0L);
+        if (timestamp - attackerFight >= ALERT_DELAY) {
+            this.lastDamages.put(attacker.getUniqueId(), timestamp);
+            final String message = this.plugin.getMessage("alert-fight",
+                    TranslationParam.from("attacker", attacker.getName()),
+                    TranslationParam.from("attacked", name)
+            );
+            this.plugin.sendSpectatorsMessage(Component.text(message)
+                    .hoverEvent(HoverEvent.showText(Component.text("§cSe téléporter")))
+                    .clickEvent(ClickEvent.runCommand("/tp " + attacker.getName())));
         }
     }
 }
